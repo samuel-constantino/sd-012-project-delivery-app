@@ -3,5 +3,5 @@ const { decodeToken } = require('./decodeToken');
 
 module.exports = {
     getToken,
-    decodeToken
+    decodeToken,
 };

@@ -1,5 +1,5 @@
-const { postRegister } = require("./postRegister");
+const { postRegister } = require('./postRegister');
 
 module.exports = {
   postRegister,
-}
+};

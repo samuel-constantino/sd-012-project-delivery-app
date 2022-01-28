@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
   try {
     if (!token) throw new Error('Token not found');
     const decoded = decodeToken(token);
-    req.loggedUser = decoded;
+    req.loggedUser = decoded.data;
     return next();
   } catch (err) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message });

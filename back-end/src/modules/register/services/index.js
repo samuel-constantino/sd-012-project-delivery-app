@@ -1,4 +1,4 @@
-const { postRegisterHandler } = require("./postRegisterHandler");
+const { postRegisterHandler } = require('./postRegisterHandler');
 
 module.exports = {
   postRegisterHandler,
