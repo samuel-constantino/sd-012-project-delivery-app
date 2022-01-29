@@ -1,8 +1,13 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 
-const { JWT_SECRET } = process.env;
+const SECRET = fs.readFileSync(
+  path.resolve(__dirname, '../../../jwt.evaluation.key'),
+  'utf-8'
+).trim();
 
-const decodeToken = (token, secret = JWT_SECRET) => {
+const decodeToken = (token, secret = SECRET) => {
   const decode = jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       throw new Error('Expired or invalid token');
