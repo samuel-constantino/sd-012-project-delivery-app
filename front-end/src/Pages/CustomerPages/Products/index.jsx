@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ProductCard from './productCard';
 import api from '../../../Services/api';
 import NavBar from '../../../Components/Navbar';
-import { useCart } from '../../../Provider';
+import { useGlobalState } from '../../../Provider';
+import { formatCart } from '../../../util/formatCart';
 
 const BASE_URL = 'http://localhost:3001';
 
@@ -16,6 +17,8 @@ export default function Products() {
 
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
+
+  const { cart, setCheckoutCart } = useGlobalState();
 
   const PRODUCTS_PER_PAGE = 10;
 
@@ -35,7 +38,10 @@ export default function Products() {
   // Packaging
   const buttonCart = {
     variant: 'contained',
-    onClick: () => navigate('/checkout'),
+    onClick: () => {
+      setCheckoutCart(formatCart(cart));
+      navigate('/checkout');
+    },
   };
 
   const pagination = {

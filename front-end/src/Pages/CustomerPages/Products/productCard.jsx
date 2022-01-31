@@ -9,18 +9,53 @@ import {
   Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useCart } from '../../../Provider';
 
 export default function ProductCard({ product }) {
   const { name, price, urlImage } = product;
   const [quantity, setQuantity] = useState(0);
   const [disabled, setDisabled] = useState(true);
-  const { addToCart, removeToCart } = useCart();
 
   useEffect(() => {
     if (quantity === 0) setDisabled(true);
     else setDisabled(false);
   }, [quantity]);
+
+  const addToCart = ({ productName, productPrice }) => {
+    setCart((prevCart) => {
+      let productQuantity = 1;
+      // Se o produto existir no carrinho, atualize sua quantidade
+      if (prevCart[productName]) {
+        productQuantity += prevCart[productName].quantity;
+      }
+
+      // Atualiza preço total
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + +productPrice);
+
+      return {
+        ...prevCart,
+        [productName]: { price: productPrice, quantity: productQuantity },
+      };
+    });
+  };
+
+  const removeToCart = ({ productName, productPrice }) => {
+    setCart((prevCart) => {
+      const productQuantity = prevCart[productName].quantity - 1;
+
+      // Atualiza preço total
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - +productPrice);
+
+      if (productQuantity === 0) {
+        delete prevCart[productName];
+        return prevCart;
+      }
+
+      return {
+        ...prevCart,
+        [productName]: { price: productPrice, quantity: productQuantity },
+      };
+    });
+  };
 
   const handleClick = (target) => {
     if (target.name === 'positive') {
