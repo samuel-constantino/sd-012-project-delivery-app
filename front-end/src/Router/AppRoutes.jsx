@@ -34,7 +34,7 @@ export default function AppRoutes() {
         <Route exact path="/checkout" element={ <Checkout /> } />
         <Route exact path="/order-details/:id" element={ <CustomerOrderDetails /> } />
         <Route exact path="/orders" element={ <CustomerOrders /> } />
-        <Route exact path="/products" element={ <Products /> } />
+        <Route exact path="/customer/products" element={ <Products /> } />
 
         {/* Seller */}
         <Route exact path="/s/order-details/:id" element={ <SellerOrderDetails /> } />

@@ -6,21 +6,59 @@ const AppContext = createContext();
 
 // Criação do Provider
 const Provider = ({ children }) => {
-  const [globalState, setGlobalState] = useState(null);
+  const [cart, setCart] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const addToCart = ({ name, price }) => {
+    setCart((prevCart) => {
+      let quantity = 1;
+      // Se o produto existir no carrinho, atualize sua quantidade
+      if (prevCart[name]) {
+        quantity += prevCart[name].quantity;
+      }
+
+      // Atualiza preço total
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + +price);
+
+      return {
+        ...prevCart,
+        [name]: { price, quantity },
+      };
+    });
+  };
+
+  const removeToCart = ({ name, price }) => {
+    setCart((prevCart) => {
+      const quantity = prevCart[name].quantity - 1;
+
+      // Atualiza preço total
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - +price);
+
+      if (quantity === 0) {
+        delete prevCart[name];
+        return prevCart;
+      }
+
+      return {
+        ...prevCart,
+        [name]: { price, quantity },
+      };
+    });
+  };
 
   return (
-    <AppContext.Provider value={ { globalState, setGlobalState } }>
+    <AppContext.Provider value={ { cart, totalPrice, addToCart, removeToCart } }>
       {children}
     </AppContext.Provider>
   );
 };
 
 // Simplificação do uso posterior do useContext
-const useGlobalState = () => React.useContext(AppContext);
+const useCart = () => React.useContext(AppContext);
 
 // Exports
 export { Provider };
-export { useGlobalState };
+export { useCart };
 
 // Prop validation
 Provider.propTypes = {

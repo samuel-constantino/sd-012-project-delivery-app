@@ -18,8 +18,7 @@ export default function Login() {
       const res = await api.post('login', login);
       const { token } = res.data;
       localStorage.setItem('token', JSON.stringify(token));
-      console.log('📺🐛 ', token);
-      navigate('/products');
+      navigate('/customer/products');
     } catch (error) {
       setErrMsg('Erro no login');
       console.log('📺🐛 ', error);

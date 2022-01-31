@@ -1,34 +1,28 @@
 import React from 'react';
+import { Button } from '@mui/material';
 
 export default function Navbar() {
   return (
-      <nav>
-        <p
-        data-testid="customer_products__element-navbar-link-products"
-        >
-          Produtos
-        </p>
+    <nav style={ { display: 'flex' } }>
+      <Button data-testid="customer_products__element-navbar-link-products">
+        Produtos
+      </Button>
 
-        <div
-          data-testid="customer_products__element-navbar-link-orders"
-        >
-          Meus Pedidos
-        </div>
-      
-        <p
-        data-testid="customer_products__element-navbar-user-full-name"
-        value={user}
-        >
-          {user}
-        </p>
+      <Button data-testid="customer_products__element-navbar-link-orders">
+        Meus Pedidos
+      </Button>
 
-        <button
-          data-testid="customer_products__element-navbar-link-logout"
-          type="button"
-          onClick={}
-        >
-          Sair
-        </button>
-     </nav>
+      <Button data-testid="customer_products__element-navbar-user-full-name">
+        User
+      </Button>
+
+      <Button
+        data-testid="customer_products__element-navbar-link-logout"
+        type="button"
+        onClick={ () => {} }
+      >
+        Sair
+      </Button>
+    </nav>
   );
 }
