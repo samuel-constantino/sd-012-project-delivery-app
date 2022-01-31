@@ -4,7 +4,7 @@ import { Grid, Typography } from '@mui/material';
 export default function ProductsTitle() {
   const gridContainer = {
     container: true,
-    xs: 12,
+    // xs: 12,
     sx: {
       justifyContent: 'center',
       alignItems: 'stretch',
@@ -12,6 +12,7 @@ export default function ProductsTitle() {
   };
   const common = {
     container: true,
+    item: true,
     sx: {
       justifyContent: 'center',
       textAlign: 'center',

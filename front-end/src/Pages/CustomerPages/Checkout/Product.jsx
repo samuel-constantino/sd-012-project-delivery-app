@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Grid, Paper, Typography, Button } from '@mui/material';
 
 export default function Product(props) {
-  const { item, description, quantity = 0, unitValue = 0 } = props;
+  const { item = '', name = '', quantity = 0, price = 0, handleDelete } = props;
 
   const gridContainer = {
     container: true,
-    xs: 12,
+    // xs: 12,
     sx: {
       justifyContent: 'center',
       alignItems: 'stretch',
@@ -16,6 +16,7 @@ export default function Product(props) {
   };
   const common = {
     container: true,
+    item: true,
     sx: {
       justifyContent: 'center',
       textAlign: 'center',
@@ -36,19 +37,19 @@ export default function Product(props) {
           <Typography>{item}</Typography>
         </Grid>
         <Grid { ...item2 } xs={ 4.6 }>
-          <Typography>{description}</Typography>
+          <Typography>{name}</Typography>
         </Grid>
         <Grid { ...item3 } xs={ 1.7 }>
           <Typography>{quantity}</Typography>
         </Grid>
         <Grid { ...item4 } xs={ 1.7 }>
-          <Typography>{`R$ ${unitValue.toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${price.toFixed(2)}`}</Typography>
         </Grid>
         <Grid { ...item5 } xs={ 1.7 }>
-          <Typography>{`R$ ${(unitValue * quantity).toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${(price * quantity).toFixed(2)}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 1.5 }>
-          <Button>Remover</Button>
+          <Button onClick={ handleDelete }>Remover</Button>
         </Grid>
       </Grid>
     </Paper>
@@ -57,7 +58,8 @@ export default function Product(props) {
 
 Product.propTypes = {
   item: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  unitValue: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };

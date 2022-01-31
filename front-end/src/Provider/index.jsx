@@ -6,59 +6,38 @@ const AppContext = createContext();
 
 // Criação do Provider
 const Provider = ({ children }) => {
+  const [checkoutCart, setCheckoutCart] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
+  const [deliveryDetails, setDeliveryDetails] = useState({});
   const [cart, setCart] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const addToCart = ({ name, price }) => {
-    setCart((prevCart) => {
-      let quantity = 1;
-      // Se o produto existir no carrinho, atualize sua quantidade
-      if (prevCart[name]) {
-        quantity += prevCart[name].quantity;
-      }
-
-      // Atualiza preço total
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + +price);
-
-      return {
-        ...prevCart,
-        [name]: { price, quantity },
-      };
-    });
-  };
-
-  const removeToCart = ({ name, price }) => {
-    setCart((prevCart) => {
-      const quantity = prevCart[name].quantity - 1;
-
-      // Atualiza preço total
-      setTotalPrice((prevTotalPrice) => prevTotalPrice - +price);
-
-      if (quantity === 0) {
-        delete prevCart[name];
-        return prevCart;
-      }
-
-      return {
-        ...prevCart,
-        [name]: { price, quantity },
-      };
-    });
+  const statesPkg = {
+    checkoutCart,
+    setCheckoutCart,
+    allOrders,
+    setAllOrders,
+    deliveryDetails,
+    setDeliveryDetails,
+    cart,
+    setCart,
+    totalPrice,
+    setTotalPrice,
   };
 
   return (
-    <AppContext.Provider value={ { cart, totalPrice, addToCart, removeToCart } }>
+    <AppContext.Provider value={ statesPkg }>
       {children}
     </AppContext.Provider>
   );
 };
 
 // Simplificação do uso posterior do useContext
-const useCart = () => React.useContext(AppContext);
+const useGlobalState = () => React.useContext(AppContext);
 
 // Exports
 export { Provider };
-export { useCart };
+export { useGlobalState };
 
 // Prop validation
 Provider.propTypes = {
