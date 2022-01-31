@@ -17,7 +17,7 @@ export default function Checkout() {
   // Handlers
   const handleSubmit = async () => {
     const customerOrder = { products: checkoutCart, deliveryDetails };
-    // const res = await api.get('ROTA', customerOrder);
+    // const res = await api.get('seller/sellers');
     setShowDialog(true);
     console.log('📺🐛 ', customerOrder);
   };
