@@ -1,7 +1,9 @@
-const { calculateTotalPrice } = require('../helpers/calculateTotalPrice');
-const { checkUserRole } = require('../helpers/checkUserRole');
-const { createSale } = require('../helpers/createSale');
-const { findSeller } = require('../helpers/findSeller');
+const {
+  calculateTotalPrice,
+  checkUserRole,
+  createSale,
+  findSeller,
+} = require('../../helpers');
 const { orderValidation } = require('../validations/orderValidation');
 
 const postOrderHandler = async (order, { id: userId, role }) => {

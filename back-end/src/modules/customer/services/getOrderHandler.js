@@ -1,4 +1,4 @@
-const { findSale } = require('../helpers/findSale');
+const { findSale } = require('../../helpers');
 
 const getOrderHandler = async (id) => findSale(id);
 

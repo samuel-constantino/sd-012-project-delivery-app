@@ -1,7 +1,11 @@
-const { getSaleByIdHandler } = require('./getSaleByIdHandler');
-const { updateSaleHandler } = require('./updateSaleHandler');
+const { getSaleHandler } = require('./getSaleHandler');
+const { getSalesHandler } = require('./getSalesHandler');
+const { getSellersHandler } = require('./getSellersHandler');
+const { putSaleStatusHandler } = require('./putSaleStatusHandler');
 
 module.exports = {
-  getSaleByIdHandler,
-  updateSaleHandler,
+  getSaleHandler,
+  getSalesHandler,
+  getSellersHandler,
+  putSaleStatusHandler,
 };

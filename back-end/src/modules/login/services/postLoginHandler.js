@@ -10,8 +10,9 @@ const postLoginHandler = async (user) => {
     const encryptedPassword = md5(password);
     const checkUser = await User.findOne({ where: { email, password: encryptedPassword } });
     if (!checkUser) notFound('User does not exist');
+    const { name, role } = checkUser.dataValues;
     const token = getToken(checkUser.dataValues);
-    return token;
+    return { name, email, role, token };
 };
 
 module.exports = {

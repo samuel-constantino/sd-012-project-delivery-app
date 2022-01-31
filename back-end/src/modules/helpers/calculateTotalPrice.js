@@ -1,4 +1,4 @@
-const { Product } = require('../../../database/models');
+const { Product } = require('../../database/models');
 
 const calculateTotalPrice = async (products) => {
   const partialPrices = await Promise.all(products.map(async ({ productId, quantity }) => {

@@ -1,9 +1,9 @@
 const { ApiError: { unauthorized } } = require('../../../global/errors/ApiError');
 const { findSales } = require('../../helpers');
 
-const getOrdersHandler = (id, role) => {
-  if (role !== 'customer') unauthorized('Log in as a customer to check orders');
+const getSalesHandler = async (id, role) => {
+  if (role !== 'seller') unauthorized('Log in as a seller to check sales');
   return findSales(id, role);
 };
 
-module.exports = { getOrdersHandler };
+module.exports = { getSalesHandler };

@@ -1,7 +1,11 @@
-const { getSaleById } = require('./getSales');
-const { updateSale } = require('./updateSale');
+const { getSale } = require('./getSale');
+const { getSales } = require('./getSales');
+const { getSellers } = require('./getSellers');
+const { putSaleStatus } = require('./putSaleStatus');
 
 module.exports = {
-  getSaleById,
-  updateSale,
+  getSale,
+  getSales,
+  getSellers,
+  putSaleStatus,
 };

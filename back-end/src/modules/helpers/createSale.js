@@ -1,4 +1,4 @@
-const { Sale } = require('../../../database/models');
+const { Sale } = require('../../database/models');
 
 const createSale = async (order, products) => {
   const sale = await Sale.create(order);

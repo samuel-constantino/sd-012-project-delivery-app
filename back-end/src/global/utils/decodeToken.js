@@ -4,7 +4,7 @@ const path = require('path');
 
 const SECRET = fs.readFileSync(
   path.resolve(__dirname, '../../../jwt.evaluation.key'),
-  'utf-8'
+  'utf-8',
 ).trim();
 
 const decodeToken = (token, secret = SECRET) => {
