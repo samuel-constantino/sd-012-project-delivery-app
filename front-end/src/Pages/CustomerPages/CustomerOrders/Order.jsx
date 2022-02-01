@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,6 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 export default function Order(props) {
+  const navigate = useNavigate();
   const { status = 'Pendente', orderId = '13', date = '1/1/22', cost = 0 } = props;
 
   const statusPkg = {
@@ -18,6 +20,11 @@ export default function Order(props) {
     py: 1,
     mx: -2,
     mt: -2,
+  };
+
+  const detailsBtnPkg = {
+    size: 'small',
+    onClick: () => navigate(`/order-details/${orderId}`),
   };
 
   return (
@@ -37,7 +44,7 @@ export default function Order(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Detalhes</Button>
+        <Button { ...detailsBtnPkg }>Detalhes</Button>
       </CardActions>
     </Card>
   );

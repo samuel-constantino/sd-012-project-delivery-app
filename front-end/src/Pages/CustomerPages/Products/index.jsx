@@ -3,7 +3,6 @@ import { Box, Button, Pagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './productCard';
 import api from '../../../Services/api';
-import NavBar from '../../../Components/Navbar';
 import { useGlobalState } from '../../../Provider';
 import { formatCart } from '../../../util/formatCart';
 
@@ -51,7 +50,6 @@ export default function Products() {
 
   return (
     <>
-      <NavBar />
       <Button { ...buttonCart }>
         Ver Carrinho R$
         { totalPrice.toFixed(2) }

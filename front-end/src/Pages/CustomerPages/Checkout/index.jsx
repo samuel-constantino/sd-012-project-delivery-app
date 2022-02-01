@@ -5,7 +5,6 @@ import Product from './Product';
 import ProductsTitle from './ProductsTitle';
 import DeliveryDetails from './DeliveryDetails';
 // import api from '../../../Services/api';
-import Navbar from '../../../Components/Navbar';
 import EndDialog from './EndDialog';
 
 export default function Checkout() {
@@ -64,7 +63,6 @@ export default function Checkout() {
 
   return (
     <Container>
-      <Navbar />
       <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
         <Box px={ 4 } py={ 6 }>
           <ProductsTitle />
