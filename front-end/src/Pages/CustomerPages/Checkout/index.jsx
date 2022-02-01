@@ -4,27 +4,39 @@ import { useGlobalState } from '../../../Provider';
 import Product from './Product';
 import ProductsTitle from './ProductsTitle';
 import DeliveryDetails from './DeliveryDetails';
-// import api from '../../../Services/api';
 import EndDialog from './EndDialog';
+import api from '../../../Services/api';
 
 export default function Checkout() {
   // State
-  const { checkoutCart, setCheckoutCart } = useGlobalState();
-  const { deliveryDetails } = useGlobalState();
+  const { checkoutCart, setCheckoutCart, setCart, setTotalPrice } = useGlobalState();
+  const { deliveryInfo } = useGlobalState();
   const [showDialog, setShowDialog] = useState(false);
+  const [saleId, setSaleId] = useState();
 
   // Handlers
   const handleSubmit = async () => {
-    const customerOrder = { products: checkoutCart, deliveryDetails };
-    // const res = await api.get('seller/sellers');
+    const products = checkoutCart
+      .map(({ productId, quantity }) => ({ productId, quantity }));
+    const customerOrder = { products, deliveryInfo };
+    customerOrder.deliveryInfo.status = 'Pendente';
+    const { data } = await api.post('customer/orders', customerOrder);
+    setSaleId(data.sale.id);
     setShowDialog(true);
     console.log('📺🐛 ', customerOrder);
   };
-  const handleDelete = (productIndex) => {
+  const handleDelete = (product, productIndex) => {
+    const { name, price, quantity } = product;
+    const subTotal = +price * quantity;
     const updatedCheckoutCart = checkoutCart.filter(
-      (_, index) => productIndex !== index,
+      (_product, index) => productIndex !== index,
     );
     setCheckoutCart(updatedCheckoutCart);
+    setCart((prevCart) => {
+      delete prevCart[name];
+      return prevCart;
+    });
+    setTotalPrice((prevPrice) => prevPrice - subTotal);
   };
 
   // Render functions
@@ -32,7 +44,7 @@ export default function Checkout() {
     const props = {
       ...product,
       item: index + 1,
-      handleDelete: () => handleDelete(index),
+      handleDelete: () => handleDelete(product, index),
     };
     return <Product key={ index } { ...props } />;
   });
@@ -59,6 +71,7 @@ export default function Checkout() {
   const endDialogPkg = {
     showDialog,
     setShowDialog,
+    saleId,
   };
 
   return (
@@ -78,7 +91,7 @@ export default function Checkout() {
           <DeliveryDetails />
         </Box>
       </Paper>
-      <Button { ...SubmitBtnPkg }>finalizar pedido</Button>
+      <Button { ...SubmitBtnPkg }>Finalizar pedido</Button>
       <EndDialog { ...endDialogPkg } />
     </Container>
   );

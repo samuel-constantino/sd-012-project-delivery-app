@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((req) => {
-  if (req.url === 'login') return req;
+  if (req.url === 'login' || req.url === 'register') return req;
   const user = getUser();
   req.headers.authorization = `Bearer: ${user.token}`;
   return req;

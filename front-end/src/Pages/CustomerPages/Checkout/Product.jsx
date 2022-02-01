@@ -43,10 +43,10 @@ export default function Product(props) {
           <Typography>{quantity}</Typography>
         </Grid>
         <Grid { ...item4 } xs={ 1.7 }>
-          <Typography>{`R$ ${price.toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${+price}`}</Typography>
         </Grid>
         <Grid { ...item5 } xs={ 1.7 }>
-          <Typography>{`R$ ${(price * quantity).toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${(+price * +quantity).toFixed(2)}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 1.5 }>
           <Button onClick={ handleDelete }>Remover</Button>

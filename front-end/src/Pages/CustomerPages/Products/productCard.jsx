@@ -9,9 +9,11 @@ import {
   Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useGlobalState } from '../../../Provider';
 
 export default function ProductCard({ product }) {
-  const { name, price, urlImage } = product;
+  const { setCart, setTotalPrice } = useGlobalState();
+  const { id, name, price, urlImage } = product;
   const [quantity, setQuantity] = useState(0);
   const [disabled, setDisabled] = useState(true);
 
@@ -20,7 +22,7 @@ export default function ProductCard({ product }) {
     else setDisabled(false);
   }, [quantity]);
 
-  const addToCart = ({ productName, productPrice }) => {
+  const addToCart = ({ name: productName, price: productPrice }) => {
     setCart((prevCart) => {
       let productQuantity = 1;
       // Se o produto existir no carrinho, atualize sua quantidade
@@ -33,12 +35,12 @@ export default function ProductCard({ product }) {
 
       return {
         ...prevCart,
-        [productName]: { price: productPrice, quantity: productQuantity },
+        [productName]: { price: productPrice, quantity: productQuantity, productId: id },
       };
     });
   };
 
-  const removeToCart = ({ productName, productPrice }) => {
+  const removeToCart = ({ name: productName, price: productPrice }) => {
     setCart((prevCart) => {
       const productQuantity = prevCart[productName].quantity - 1;
 
@@ -52,7 +54,7 @@ export default function ProductCard({ product }) {
 
       return {
         ...prevCart,
-        [productName]: { price: productPrice, quantity: productQuantity },
+        [productName]: { price: productPrice, quantity: productQuantity, productId: id },
       };
     });
   };

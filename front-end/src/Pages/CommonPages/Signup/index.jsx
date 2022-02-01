@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Grid, Paper, TextField, Button, Typography } from '@mui/material';
 import registerSchema from '../../../Validations/registerSchema';
+import api from '../../../Services/api';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -12,7 +13,12 @@ export default function Signup() {
 
   const handleSubmit = async () => {
     try {
-      navigate('/login');
+      const { email, password } = register;
+      await api.post('register', register);
+      const res = await api.post('login', { email, password });
+      const user = res.data;
+      localStorage.setItem('user', JSON.stringify(user));
+      navigate('/customer/products');
     } catch (error) {
       setErrMsg('Erro ao cadastrar');
       console.log('📺🐛 ', error);
@@ -90,7 +96,7 @@ export default function Signup() {
             <Button { ...registerBtnPkg }>Cadastrar</Button>
           </Grid>
           <Grid { ...errMsgGridPkg }>
-            <Typography>{ `${errMsg}` }</Typography>
+            <Typography>{`${errMsg}`}</Typography>
           </Grid>
         </Box>
       </Paper>

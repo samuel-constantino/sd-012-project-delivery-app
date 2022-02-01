@@ -8,7 +8,7 @@ const AppContext = createContext();
 const Provider = ({ children }) => {
   const [checkoutCart, setCheckoutCart] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
-  const [deliveryDetails, setDeliveryDetails] = useState({});
+  const [deliveryInfo, setDeliveryInfo] = useState({});
   const [cart, setCart] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -17,8 +17,8 @@ const Provider = ({ children }) => {
     setCheckoutCart,
     allOrders,
     setAllOrders,
-    deliveryDetails,
-    setDeliveryDetails,
+    deliveryInfo,
+    setDeliveryInfo,
     cart,
     setCart,
     totalPrice,

@@ -3,7 +3,8 @@ const formatCart = (cart) => (
     const name = item[0];
     const { price } = item[1];
     const { quantity } = item[1];
-    return { name, price, quantity };
+    const { productId } = item[1];
+    return { name, price, quantity, productId };
   })
 );
 

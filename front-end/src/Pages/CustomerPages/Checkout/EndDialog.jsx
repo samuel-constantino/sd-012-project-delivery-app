@@ -9,11 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 
 export default function EndDialog(props) {
-  const { showDialog, setShowDialog } = props;
+  const { showDialog, setShowDialog, saleId } = props;
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate('/order-details/:id');
+    navigate(`/customer/orders/${saleId}`);
     setShowDialog(false);
   };
 
@@ -44,4 +44,5 @@ export default function EndDialog(props) {
 EndDialog.propTypes = {
   showDialog: PropTypes.bool.isRequired,
   setShowDialog: PropTypes.func.isRequired,
+  saleId: PropTypes.number.isRequired,
 };

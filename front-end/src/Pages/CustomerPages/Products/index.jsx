@@ -37,7 +37,7 @@ export default function Products() {
     variant: 'contained',
     onClick: () => {
       setCheckoutCart(formatCart(cart));
-      navigate('/checkout');
+      navigate('/customer/checkout');
     },
   };
 

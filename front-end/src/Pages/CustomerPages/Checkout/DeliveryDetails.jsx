@@ -13,43 +13,43 @@ import api from '../../../Services/api';
 
 export default function DeliveryDetails() {
   // State
-  const { deliveryDetails, setDeliveryDetails } = useGlobalState();
-  const [sellersList = ['a', 'b', 'c'], setSellersList] = useState();
+  const { deliveryInfo, setDeliveryInfo } = useGlobalState();
+  const [sellersList, setSellersList] = useState([]);
 
   // Destructuring
-  const { seller = '', address = '', addressNumber = '' } = deliveryDetails;
+  const { sellerName = '', deliveryAddress = '', deliveryNumber = '' } = deliveryInfo;
 
   // Loads sellers list
   useEffect(() => {
     const loadSellersList = async () => {
-      const res = await api.get('ROTA', {});
+      const res = await api.get('seller/sellers');
       const list = res.data;
       setSellersList(list);
     };
     loadSellersList();
-  });
+  }, []);
 
   // Handle Changes
   const handleSellerChange = (e) => {
-    setDeliveryDetails({ ...deliveryDetails, seller: e.target.value });
+    setDeliveryInfo({ ...deliveryInfo, sellerName: e.target.value });
   };
   const handleAddressChange = (e) => {
-    setDeliveryDetails({ ...deliveryDetails, address: e.target.value });
+    setDeliveryInfo({ ...deliveryInfo, deliveryAddress: e.target.value });
   };
   const handleAddressNumberChange = (e) => {
-    setDeliveryDetails({ ...deliveryDetails, addressNumber: e.target.value });
+    setDeliveryInfo({ ...deliveryInfo, deliveryNumber: e.target.value });
   };
 
   // Rendering functions
   const renderSelect = () => {
-    const options = sellersList.map((el, index) => (
-      <MenuItem value={ el } key={ index }>{ el }</MenuItem>));
+    const options = sellersList.map((e, index) => (
+      <MenuItem value={ e.name } key={ index }>{ e.name }</MenuItem>));
 
     return (
       <FormControl fullWidth>
         <InputLabel>Vendedor Responsável</InputLabel>
         <Select
-          value={ seller }
+          value={ sellerName }
           label="Vendedor Responsável"
           onChange={ handleSellerChange }
         >
@@ -70,14 +70,14 @@ export default function DeliveryDetails() {
   };
   const addressPkg = {
     label: 'Endereço',
-    value: address,
+    value: deliveryAddress,
     fullWidth: true,
     onChange: handleAddressChange,
   };
   const addressNumberPkg = {
     label: 'Número',
     type: 'number',
-    value: addressNumber,
+    value: deliveryNumber,
     fullWidth: true,
     onChange: handleAddressNumberChange,
   };
