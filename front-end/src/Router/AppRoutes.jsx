@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 // Common
 import Login from '../Pages/CommonPages/Login';
@@ -27,26 +27,24 @@ export default function AppRoutes() {
 
         {/* Common */}
         <Route exact path="/login" element={ <Login /> } />
-        <Route exact path="/" element={ <Login /> } />
         <Route exact path="/register" element={ <Signup /> } />
 
         {/* Customer */}
-        <Route exact path="/checkout" element={ <Checkout /> } />
-        <Route exact path="/order-details/:id" element={ <CustomerOrderDetails /> } />
-        <Route exact path="/orders" element={ <CustomerOrders /> } />
         <Route exact path="/customer/products" element={ <Products /> } />
+        <Route exact path="/customer/checkout" element={ <Checkout /> } />
+        <Route exact path="/customer/orders/:id" element={ <CustomerOrderDetails /> } />
+        <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
 
         {/* Seller */}
-        <Route exact path="/s/order-details/:id" element={ <SellerOrderDetails /> } />
-        <Route exact path="/s/orders" element={ <SellerOrders /> } />
+        <Route exact path="/seller/orders/:id" element={ <SellerOrderDetails /> } />
+        <Route exact path="/seller/orders" element={ <SellerOrders /> } />
 
         {/* Admin */}
-        <Route exact path="/dashboard" element={ <Dashboard /> } />
+        <Route exact path="/admin/manage" element={ <Dashboard /> } />
 
         {/* Default */}
-        {/* <Navigate replace to="/products" /> */}
-        {/* <Route element={ <Navigate replace to="/products" /> } /> */}
-        <Route element={ <NotFound /> } />
+        <Route path="/" element={ <Navigate replace to="/login" /> } />
+        <Route path="*" element={ <NotFound /> } />
 
       </Routes>
     </BrowserRouter>
