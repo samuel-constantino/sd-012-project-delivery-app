@@ -28,7 +28,7 @@ export default function AppRoutes() {
         {/* Common */}
         <Route exact path="/login" element={ <Login /> } />
         <Route exact path="/" element={ <Login /> } />
-        <Route exact path="/signup" element={ <Signup /> } />
+        <Route exact path="/register" element={ <Signup /> } />
 
         {/* Customer */}
         <Route exact path="/checkout" element={ <Checkout /> } />
