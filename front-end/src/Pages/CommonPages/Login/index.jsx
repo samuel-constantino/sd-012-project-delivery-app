@@ -16,8 +16,8 @@ export default function Login() {
   const handleSubmit = async () => {
     try {
       const res = await api.post('login', login);
-      const { token } = res.data;
-      localStorage.setItem('token', JSON.stringify(token));
+      const user = res.data;
+      localStorage.setItem('user', JSON.stringify(user));
       navigate('/customer/products');
     } catch (error) {
       setErrMsg('Erro no login');
@@ -97,7 +97,7 @@ export default function Login() {
             <Button { ...registerBtnPkg }>Ainda não tenho conta</Button>
           </Grid>
           <Grid { ...errMsgGridPkg }>
-            <Typography>{ `${errMsg}` }</Typography>
+            <Typography>{`${errMsg}`}</Typography>
           </Grid>
         </Box>
       </Paper>

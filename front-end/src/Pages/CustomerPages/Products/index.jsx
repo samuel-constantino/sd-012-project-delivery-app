@@ -7,13 +7,11 @@ import NavBar from '../../../Components/Navbar';
 import { useGlobalState } from '../../../Provider';
 import { formatCart } from '../../../util/formatCart';
 
-const BASE_URL = 'http://localhost:3001';
-
 export default function Products() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
-  const { totalPrice } = useCart();
+  const { totalPrice } = useGlobalState();
 
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
@@ -26,7 +24,7 @@ export default function Products() {
     (async () => {
       const offset = (page - 1) * PRODUCTS_PER_PAGE;
       const limit = PRODUCTS_PER_PAGE;
-      const { data } = await api.post(`${BASE_URL}/products`, { offset, limit });
+      const { data } = await api.post('products', { offset, limit });
       const productsArray = data.products.rows;
       const productsQuantity = data.products.count;
       const pagesQuantity = Math.ceil(productsQuantity / PRODUCTS_PER_PAGE);
