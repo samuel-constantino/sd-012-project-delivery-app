@@ -5,6 +5,7 @@ import ProductCard from './productCard';
 import api from '../../../Services/api';
 import { useGlobalState } from '../../../Provider';
 import { formatCart } from '../../../util/formatCart';
+import Navbar from '../../../Components/Navbar';
 
 export default function Products() {
   const navigate = useNavigate();
@@ -50,7 +51,11 @@ export default function Products() {
 
   return (
     <>
-      <Button { ...buttonCart }>
+      <Navbar />
+      <Button
+        { ...buttonCart }
+        data-testid="customer_products__checkout-bottom-value"
+      >
         Ver Carrinho R$
         { totalPrice.toFixed(2) }
       </Button>

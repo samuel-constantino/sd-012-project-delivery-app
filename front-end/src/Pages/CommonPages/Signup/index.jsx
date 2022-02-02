@@ -52,6 +52,7 @@ export default function Signup() {
     label: 'Nome',
     placeholder: 'Insira seu nome',
     style: { marginBottom: '20px' },
+    inputProps: { 'data-testid': 'common_register__input-name' },
     onChange: handleChange,
   };
   const emailPkg = {
@@ -59,6 +60,7 @@ export default function Signup() {
     label: 'Email',
     placeholder: 'Insira seu email',
     style: { marginBottom: '20px' },
+    inputProps: { 'data-testid': 'common_register__input-email' },
     onChange: handleChange,
   };
   const passwordPkg = {
@@ -66,6 +68,7 @@ export default function Signup() {
     label: 'Senha',
     placeholder: 'Insira sua senha',
     style: { marginBottom: '20px' },
+    inputProps: { 'data-testid': 'common_register__input-password' },
     onChange: handleChange,
   };
   const registerBtnPkg = {
@@ -93,10 +96,14 @@ export default function Signup() {
             <TextField { ...namePkg } />
             <TextField { ...emailPkg } />
             <TextField { ...passwordPkg } />
-            <Button { ...registerBtnPkg }>Cadastrar</Button>
+            <Button { ...registerBtnPkg } data-testid="common_register__button-register">
+              Cadastrar
+            </Button>
           </Grid>
           <Grid { ...errMsgGridPkg }>
-            <Typography>{`${errMsg}`}</Typography>
+            <Typography data-testid="common_register__element-invalid_register">
+              {`${errMsg}`}
+            </Typography>
           </Grid>
         </Box>
       </Paper>

@@ -54,7 +54,7 @@ export default function Checkout() {
     );
     return (
       <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
-        <Chip color="secondary" label={ `Total: R$ ${total}` } />
+        <Chip color="secondary" label={ `Total: R$ ${total.toFixed(2)}` } />
       </Stack>);
   };
 

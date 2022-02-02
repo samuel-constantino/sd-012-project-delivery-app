@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Container } from '@mui/material';
 import Order from './Order';
 import api from '../../../Services/api';
+import NavBar from '../../../Components/Navbar';
 
 export default function Orders() {
   const [orders, setOrders] = useState([
@@ -24,10 +25,13 @@ export default function Orders() {
   ));
 
   return (
-    <Container>
-      <Grid container>
-        { renderProducts() }
-      </Grid>
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <Grid container>
+          { renderProducts() }
+        </Grid>
+      </Container>
+    </>
   );
 }

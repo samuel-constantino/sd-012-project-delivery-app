@@ -51,6 +51,7 @@ export default function Login() {
     label: 'Email',
     placeholder: 'Insira seu email',
     style: { marginBottom: '20px' },
+    inputProps: { 'data-testid': 'common_login__input-email' },
     // error: emailErr,
     // helperText: emailErrMsg,
     onChange: handleChange,
@@ -60,6 +61,7 @@ export default function Login() {
     label: 'Senha',
     placeholder: 'Insira sua senha',
     style: { marginBottom: '20px' },
+    inputProps: { 'data-testid': 'common_login__input-password' },
     // error: passwordErr,
     // helperText: passwordErrMsg,
     onChange: handleChange,
@@ -93,11 +95,17 @@ export default function Login() {
           <Grid { ...grid2 }>
             <TextField { ...emailPkg } />
             <TextField { ...passwordPkg } />
-            <Button { ...loginBtnPkg }>Login</Button>
-            <Button { ...registerBtnPkg }>Ainda não tenho conta</Button>
+            <Button { ...loginBtnPkg } data-testid="common_login__button-login">
+              Login
+            </Button>
+            <Button { ...registerBtnPkg } data-testid="common_login__button-register">
+              Ainda não tenho conta
+            </Button>
           </Grid>
           <Grid { ...errMsgGridPkg }>
-            <Typography>{`${errMsg}`}</Typography>
+            <Typography data-testid="common_login__element-invalid-email">
+              {`${errMsg}`}
+            </Typography>
           </Grid>
         </Box>
       </Paper>

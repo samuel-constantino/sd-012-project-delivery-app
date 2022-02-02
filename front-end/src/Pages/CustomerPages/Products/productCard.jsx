@@ -111,6 +111,7 @@ export default function ProductCard({ product }) {
     variant: 'filled',
     size: 'small',
     type: 'number',
+    inputProps: { 'data-testid': `customer_products__input-card-quantity-${id}` },
     onChange: ({ target }) => handleChange(target),
   };
 
@@ -118,23 +119,47 @@ export default function ProductCard({ product }) {
     <Card>
 
       <CardContent>
-        <Typography { ...typographyH6 } gutterBottom>
+        <Typography
+          { ...typographyH6 }
+          gutterBottom
+          data-testid={ `customer_products__element-card-price-${id}` }
+        >
           { `R$ ${price}` }
         </Typography>
       </CardContent>
 
-      <CardMedia { ...cartMedia } />
+      <CardMedia
+        { ...cartMedia }
+        data-testid={ `customer_products__img-card-bg-image-${id}` }
+      />
 
       <CardContent>
-        <Typography { ...typographyBody2 }>
+        <Typography
+          { ...typographyBody2 }
+          data-testid={ `customer_products__element-card-title-${id}` }
+        >
           { name }
         </Typography>
       </CardContent>
 
       <CardActions>
-        <Button { ...buttonNegative }>-</Button>
-        <TextField { ...textFieldQuantity } hiddenLabel />
-        <Button { ...buttonPositive }>+</Button>
+        <Button
+          { ...buttonNegative }
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+        >
+          -
+        </Button>
+        <TextField
+          { ...textFieldQuantity }
+          hiddenLabel
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+        />
+        <Button
+          { ...buttonPositive }
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+        >
+          +
+        </Button>
       </CardActions>
 
     </Card>
