@@ -4,6 +4,7 @@ import {
   Box,
   Toolbar,
   Button,
+  // Grid,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,6 +36,13 @@ export default function NavBar() {
   const buttonPkg = {
     color: 'inherit',
     onClick: ({ target }) => handleClick(target),
+    sx: {
+      fontSize: '18px',
+    },
+  };
+  const style = {
+    display: 'flex',
+    justifyContent: 'space-between',
   };
 
   const getButtons = () => {
@@ -79,22 +87,26 @@ export default function NavBar() {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar>
-          { getButtons() }
-          <Button
-            { ...buttonPkg }
-            name={ name }
-            data-testid="customer_products__element-navbar-user-full-name"
-          >
-            { name }
-          </Button>
-          <Button
-            { ...buttonPkg }
-            name={ exit }
-            data-testid="customer_products__element-navbar-link-logout"
-          >
-            SAIR
-          </Button>
+        <Toolbar sx={ style }>
+          <Box>
+            { getButtons() }
+          </Box>
+          <Box>
+            <Button
+              { ...buttonPkg }
+              name={ name }
+              data-testid="customer_products__element-navbar-user-full-name"
+            >
+              { name }
+            </Button>
+            <Button
+              { ...buttonPkg }
+              name={ exit }
+              data-testid="customer_products__element-navbar-link-logout"
+            >
+              SAIR
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
