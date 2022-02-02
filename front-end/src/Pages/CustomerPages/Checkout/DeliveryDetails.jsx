@@ -51,6 +51,7 @@ export default function DeliveryDetails() {
         <Select
           value={ sellerName }
           label="Vendedor Responsável"
+          data-testid="customer_checkout__select-seller"
           onChange={ handleSellerChange }
         >
           { options }
@@ -72,13 +73,14 @@ export default function DeliveryDetails() {
     label: 'Endereço',
     value: deliveryAddress,
     fullWidth: true,
+    inputProps: { 'data-testid': 'customer_checkout__input-address' },
     onChange: handleAddressChange,
   };
   const addressNumberPkg = {
     label: 'Número',
-    type: 'number',
     value: deliveryNumber,
     fullWidth: true,
+    inputProps: { 'data-testid': 'customer_checkout__input-addressNumber' },
     onChange: handleAddressNumberChange,
   };
 

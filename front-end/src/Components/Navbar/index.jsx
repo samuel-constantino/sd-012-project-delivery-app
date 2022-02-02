@@ -4,7 +4,6 @@ import {
   Box,
   Toolbar,
   Button,
-  // Grid,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,16 +47,23 @@ export default function NavBar() {
   const getButtons = () => {
     if (role === 'administrator') {
       return (
-        <Button { ...buttonPkg } name={ managerUsers }>
-          GERENCIAR USUÁRIOS
+        <Button
+          { ...buttonPkg }
+          name={ managerUsers }
+        >
+          { managerUsers }
         </Button>
       );
     }
 
     if (role === 'seller') {
       return (
-        <Button { ...buttonPkg } name={ products }>
-          PRODUTOS
+        <Button
+          { ...buttonPkg }
+          name={ products }
+          data-testid="customer_products__element-navbar-link-products"
+        >
+          { products }
         </Button>
       );
     }
@@ -70,14 +76,14 @@ export default function NavBar() {
             name={ products }
             data-testid="customer_products__element-navbar-link-products"
           >
-            PRODUTOS
+            { products }
           </Button>
           <Button
             { ...buttonPkg }
             name={ orders }
             data-testid="customer_products__element-navbar-link-orders"
           >
-            MEUS PEDIDOS
+            { orders }
           </Button>
         </>
       );
@@ -104,7 +110,7 @@ export default function NavBar() {
               name={ exit }
               data-testid="customer_products__element-navbar-link-logout"
             >
-              SAIR
+              { exit }
             </Button>
           </Box>
         </Toolbar>

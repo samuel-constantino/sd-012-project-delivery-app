@@ -57,7 +57,7 @@ export default function Products() {
         data-testid="customer_products__checkout-bottom-value"
       >
         Ver Carrinho R$
-        { totalPrice.toFixed(2) }
+        { totalPrice.toFixed(2).replace('.', ',') }
       </Button>
       <Pagination { ...pagination } />
       <Box sx={ { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' } }>

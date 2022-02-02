@@ -28,7 +28,6 @@ export default function Signup() {
   const handleChange = (e) => {
     const updatedRegister = { ...register, [e.target.name]: e.target.value };
     const { error } = registerSchema.validate(updatedRegister);
-    console.log(error);
     if (error) setCanRegister(false);
     else setCanRegister(true);
     setRegister(updatedRegister);
@@ -66,6 +65,7 @@ export default function Signup() {
   const passwordPkg = {
     name: 'password',
     label: 'Senha',
+    type: 'password',
     placeholder: 'Insira sua senha',
     style: { marginBottom: '20px' },
     inputProps: { 'data-testid': 'common_register__input-password' },

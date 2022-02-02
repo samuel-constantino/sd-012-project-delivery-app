@@ -6,6 +6,7 @@ import ProductsTitle from './ProductsTitle';
 import DeliveryDetails from './DeliveryDetails';
 import EndDialog from './EndDialog';
 import api from '../../../Services/api';
+import NavBar from '../../../Components/Navbar';
 
 export default function Checkout() {
   // State
@@ -54,7 +55,11 @@ export default function Checkout() {
     );
     return (
       <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
-        <Chip color="secondary" label={ `Total: R$ ${total.toFixed(2)}` } />
+        <Chip
+          color="secondary"
+          label={ `Total: R$ ${total.toFixed(2).replace('.', ',')}` }
+          data-testid="customer_checkout__element-order-total-price"
+        />
       </Stack>);
   };
 
@@ -75,24 +80,32 @@ export default function Checkout() {
   };
 
   return (
-    <Container>
-      <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
-        <Box px={ 4 } py={ 6 }>
-          <ProductsTitle />
-          { renderProducts() }
-          { renderChip() }
-        </Box>
-      </Paper>
-      <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
-        <Box px={ 4 } py={ 10 }>
-          <Typography { ...typographyPkg }>
-            Detalhes e endereço para entrega
-          </Typography>
-          <DeliveryDetails />
-        </Box>
-      </Paper>
-      <Button { ...SubmitBtnPkg }>Finalizar pedido</Button>
-      <EndDialog { ...endDialogPkg } />
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
+          <Box px={ 4 } py={ 6 }>
+            <ProductsTitle />
+            { renderProducts() }
+            { renderChip() }
+          </Box>
+        </Paper>
+        <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
+          <Box px={ 4 } py={ 10 }>
+            <Typography { ...typographyPkg }>
+              Detalhes e endereço para entrega
+            </Typography>
+            <DeliveryDetails />
+          </Box>
+        </Paper>
+        <Button
+          { ...SubmitBtnPkg }
+          data-testid="customer_checkout__button-submit-order"
+        >
+          Finalizar pedido
+        </Button>
+        <EndDialog { ...endDialogPkg } />
+      </Container>
+    </>
   );
 }

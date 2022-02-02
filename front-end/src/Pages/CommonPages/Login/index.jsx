@@ -52,8 +52,6 @@ export default function Login() {
     placeholder: 'Insira seu email',
     style: { marginBottom: '20px' },
     inputProps: { 'data-testid': 'common_login__input-email' },
-    // error: emailErr,
-    // helperText: emailErrMsg,
     onChange: handleChange,
   };
   const passwordPkg = {
@@ -61,21 +59,20 @@ export default function Login() {
     label: 'Senha',
     placeholder: 'Insira sua senha',
     style: { marginBottom: '20px' },
+    type: 'password',
     inputProps: { 'data-testid': 'common_login__input-password' },
-    // error: passwordErr,
-    // helperText: passwordErrMsg,
     onChange: handleChange,
   };
   const loginBtnPkg = {
     name: 'loginButton',
-    onClick: handleSubmit,
     variant: 'contained',
     disabled: !canLogin,
+    onClick: handleSubmit,
   };
   const registerBtnPkg = {
     name: 'registerButton',
-    onClick: () => navigate('/register'),
     variant: 'contained',
+    onClick: () => navigate('/register'),
   };
   const errMsgGridPkg = {
     container: true,

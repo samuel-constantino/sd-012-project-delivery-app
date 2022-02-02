@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-// import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -33,7 +32,12 @@ export default function Order(props) {
         <Typography { ...statusPkg }>
           { status }
         </Typography>
-        <Typography sx={ { fontSize: 14 } } color="text.secondary" gutterBottom>
+        <Typography
+          sx={ { fontSize: 14 } }
+          color="text.secondary"
+          gutterBottom
+          data-testid={ `customer_orders__element-order-id-${orderId}` }
+        >
           { `Pedido: ${orderId}` }
         </Typography>
         <Typography sx={ { mb: 1.5 } } color="text.secondary">

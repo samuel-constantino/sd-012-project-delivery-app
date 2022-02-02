@@ -34,22 +34,47 @@ export default function Product(props) {
     <Paper elevation={ 3 } sx={ { margin: '10px 0' } }>
       <Grid { ...gridContainer }>
         <Grid { ...item1 } xs={ 0.8 }>
-          <Typography>{item}</Typography>
+          <Typography
+            data-testid={ `customer_checkout__element-order-table-item-number-${item}` }
+          >
+            {item}
+          </Typography>
         </Grid>
         <Grid { ...item2 } xs={ 4.6 }>
-          <Typography>{name}</Typography>
+          <Typography
+            data-testid={ `customer_checkout__element-order-table-name-${item}` }
+          >
+            {name}
+          </Typography>
         </Grid>
         <Grid { ...item3 } xs={ 1.7 }>
-          <Typography>{quantity}</Typography>
+          <Typography
+            data-testid={ `customer_checkout__element-order-table-quantity-${item}` }
+          >
+            {quantity}
+          </Typography>
         </Grid>
         <Grid { ...item4 } xs={ 1.7 }>
-          <Typography>{`R$ ${+price}`}</Typography>
+          <Typography
+            data-testid={ `customer_checkout__element-order-table-unit-price-${item}` }
+          >
+            {`R$ ${(+price).toFixed(2).replace('.', ',')}`}
+          </Typography>
         </Grid>
         <Grid { ...item5 } xs={ 1.7 }>
-          <Typography>{`R$ ${(+price * +quantity).toFixed(2)}`}</Typography>
+          <Typography
+            data-testid={ `customer_checkout__element-order-table-sub-total-${item}` }
+          >
+            {`R$ ${(+price * +quantity).toFixed(2).replace('.', ',')}`}
+          </Typography>
         </Grid>
         <Grid { ...common } xs={ 1.5 }>
-          <Button onClick={ handleDelete }>Remover</Button>
+          <Button
+            data-testid={ `customer_checkout__element-order-table-remove-${item}` }
+            onClick={ handleDelete }
+          >
+            Remover
+          </Button>
         </Grid>
       </Grid>
     </Paper>
