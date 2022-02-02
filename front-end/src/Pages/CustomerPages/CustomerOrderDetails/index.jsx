@@ -1,37 +1,61 @@
-import React from 'react';
-// import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Box, Container, Paper, Stack, Chip, Button } from '@mui/material';
-// import { useGlobalState } from '../../../Provider';
 import Product from './Product';
 import ProductsTitle from './ProductsTitle';
 import StatusBar from './StatusBar';
-// import api from '../../../Services/api';
+import NavBar from '../../../Components/Navbar';
+import api from '../../../Services/api';
 
 export default function OrderDetails() {
   // State
-  // const { checkoutCart, setCheckoutCart } = useGlobalState();
-  // const { deliveryDetails } = useGlobalState();
-  // const [setShowDialog] = useState(false);
+  const [order, setOrder] = useState(
+    {
+      sale: {
+        seller: { name: 'j' },
+        id: '',
+        status: '',
+        saleDate: '',
+        products: [],
+      },
+    },
+  );
 
-  const order = { status: 'Pendente', orderId: '13', date: '1/1/22', seller: 'Maria' };
-  const products = [
-    { name: 'Breja', quantity: 3, price: 6 },
-    { name: 'Breja', quantity: 4.5, price: 7.89 },
-    { name: 'Breja', quantity: 1, price: 0 },
-  ];
+  const params = useParams();
+
+  // Loads sellers list
+  useEffect(() => {
+    const loadOrder = async () => {
+      const res = await api.get(`customer/orders/${params.id}`);
+      const sale = res.data;
+      console.log('📺🐛 sale', sale);
+      setOrder(sale);
+    };
+    loadOrder();
+  }, [params.id]);
+
+  // Destructuring
+  const { status, id: orderId, seller: { name }, saleDate, products } = order.sale;
+  const statusBar = { status, orderId, name, saleDate };
 
   // Render functions
   const renderProducts = () => products.map((product, index) => {
+    const { SaleProduct, name: productName, price } = product;
+    const { quantity } = SaleProduct;
     const props = {
-      ...product,
+      productName,
+      price,
+      quantity,
       item: index + 1,
     };
     return <Product key={ index } { ...props } />;
   });
   const renderChip = () => {
-    const total = products.reduce(
-      (prev, curr) => prev + (curr.price * curr.quantity), 0,
-    );
+    const total = products.reduce((prev, curr) => {
+      const price = Number(curr.price);
+      const { quantity } = curr.SaleProduct;
+      return prev + price * quantity;
+    }, 0);
     return (
       <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
         <Chip color="secondary" label={ `Total: R$ ${total.toFixed(2)}` } />
@@ -39,16 +63,19 @@ export default function OrderDetails() {
   };
 
   return (
-    <Container>
-      <StatusBar { ...order } />
-      <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
-        <Box px={ 4 } py={ 6 }>
-          <ProductsTitle />
-          { renderProducts() }
-          { renderChip() }
-        </Box>
-      </Paper>
-      <Button variant="contained">marcar como entregue</Button>
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <StatusBar { ...statusBar } />
+        <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
+          <Box px={ 4 } py={ 6 }>
+            <ProductsTitle />
+            { renderProducts() }
+            { renderChip() }
+          </Box>
+        </Paper>
+        <Button variant="contained">marcar como entregue</Button>
+      </Container>
+    </>
   );
 }

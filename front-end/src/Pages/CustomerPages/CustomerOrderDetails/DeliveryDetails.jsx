@@ -14,7 +14,7 @@ import api from '../../../Services/api';
 export default function DeliveryDetails() {
   // State
   const { deliveryDetails, setDeliveryDetails } = useGlobalState();
-  const [sellersList = ['a', 'b', 'c'], setSellersList] = useState();
+  const [sellersList, setSellersList] = useState([]);
 
   // Destructuring
   const { seller = '', address = '', addressNumber = '' } = deliveryDetails;

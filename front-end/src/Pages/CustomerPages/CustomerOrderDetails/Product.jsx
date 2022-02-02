@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Paper, Typography } from '@mui/material';
 
 export default function Product(props) {
-  const { item = '', name = '', quantity = 0, price = 0 } = props;
+  const { item = '', productName = '', quantity = 0, price = '' } = props;
 
   const gridContainer = {
     container: true,
@@ -37,16 +37,16 @@ export default function Product(props) {
           <Typography>{item}</Typography>
         </Grid>
         <Grid { ...item2 } xs={ 5 }>
-          <Typography>{name}</Typography>
+          <Typography>{productName}</Typography>
         </Grid>
         <Grid { ...item3 } xs={ 2 }>
           <Typography>{quantity}</Typography>
         </Grid>
         <Grid { ...item4 } xs={ 2 }>
-          <Typography>{`R$ ${price.toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${Number(price).toFixed(2)}`}</Typography>
         </Grid>
         <Grid { ...item5 } xs={ 2 }>
-          <Typography>{`R$ ${(price * quantity).toFixed(2)}`}</Typography>
+          <Typography>{`R$ ${(Number(price) * quantity).toFixed(2)}`}</Typography>
         </Grid>
       </Grid>
     </Paper>
@@ -55,7 +55,7 @@ export default function Product(props) {
 
 Product.propTypes = {
   item: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  productName: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,

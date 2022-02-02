@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Grid, Typography, Paper } from '@mui/material';
 
 export default function StatusBar(props) {
-  const { status, orderId, date, seller } = props;
+  const { status, orderId, saleDate, name } = props;
+
+  const date = moment(new Date(saleDate)).format('DD/MM/YY');
+
   const gridContainer = {
     container: true,
     sx: {
@@ -28,7 +32,7 @@ export default function StatusBar(props) {
           <Typography>{`Pedido: ${orderId}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 3 }>
-          <Typography>{`Vendedor(a): ${seller}`}</Typography>
+          <Typography>{`Vendedor(a): ${name}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 3 }>
           <Typography>{`Data: ${date}`}</Typography>
@@ -44,6 +48,6 @@ export default function StatusBar(props) {
 StatusBar.propTypes = {
   status: PropTypes.string.isRequired,
   orderId: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  seller: PropTypes.string.isRequired,
+  saleDate: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };

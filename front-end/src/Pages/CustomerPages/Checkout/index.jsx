@@ -24,7 +24,6 @@ export default function Checkout() {
     const { data } = await api.post('customer/orders', customerOrder);
     setSaleId(data.sale.id);
     setShowDialog(true);
-    console.log('📺🐛 ', customerOrder);
   };
   const handleDelete = (product, productIndex) => {
     const { name, price, quantity } = product;

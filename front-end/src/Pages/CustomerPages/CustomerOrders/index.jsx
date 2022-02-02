@@ -5,9 +5,7 @@ import api from '../../../Services/api';
 import NavBar from '../../../Components/Navbar';
 
 export default function Orders() {
-  const [orders, setOrders] = useState([
-    { status: 'Pendente', orderId: '13', date: '1/1/22', cost: 0 },
-  ]);
+  const [orders, setOrders] = useState([]);
 
   // Loads sellers list
   useEffect(() => {
