@@ -42,7 +42,7 @@ export default function EndDialog(props) {
 }
 
 EndDialog.propTypes = {
-  showDialog: PropTypes.bool.isRequired,
-  setShowDialog: PropTypes.func.isRequired,
-  saleId: PropTypes.number.isRequired,
-};
+  showDialog: PropTypes.bool,
+  setShowDialog: PropTypes.func,
+  saleId: PropTypes.number,
+}.isRequired;

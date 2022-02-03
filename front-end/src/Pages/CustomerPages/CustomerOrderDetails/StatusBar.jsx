@@ -51,8 +51,8 @@ export default function StatusBar(props) {
 }
 
 StatusBar.propTypes = {
-  status: PropTypes.string.isRequired,
-  orderId: PropTypes.number.isRequired,
-  saleDate: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-};
+  status: PropTypes.string,
+  orderId: PropTypes.number,
+  saleDate: PropTypes.string,
+  name: PropTypes.string,
+}.isRequired;

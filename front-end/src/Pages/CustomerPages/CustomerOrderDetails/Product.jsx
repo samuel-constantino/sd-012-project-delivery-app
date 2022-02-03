@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Paper, Typography } from '@mui/material';
 
 export default function Product(props) {
-  const { item = '', productName = '', quantity = 0, price = '' } = props;
+  const { item, productName, quantity, price } = props;
 
   const gridContainer = {
     container: true,
@@ -64,9 +64,8 @@ export default function Product(props) {
 }
 
 Product.propTypes = {
-  item: PropTypes.number.isRequired,
-  productName: PropTypes.string.isRequired,
-  quantity: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-};
+  item: PropTypes.number,
+  productName: PropTypes.string,
+  quantity: PropTypes.number,
+  price: PropTypes.number,
+}.isRequired;

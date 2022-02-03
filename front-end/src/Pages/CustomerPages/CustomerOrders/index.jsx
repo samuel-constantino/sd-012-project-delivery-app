@@ -11,12 +11,11 @@ export default function Orders() {
   useEffect(() => {
     const loadOrders = async () => {
       const res = await api.get('customer/orders');
-      console.log('📺🐛 ', res.data.sales);
       const list = res.data.sales;
       setOrders(list);
     };
     loadOrders();
-  });
+  }, []);
 
   // Render functions
   const renderProducts = () => orders.map((order, index) => (

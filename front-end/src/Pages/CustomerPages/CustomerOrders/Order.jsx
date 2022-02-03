@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 
 export default function Order(props) {
   const navigate = useNavigate();
-  console.log('📺🐛 ', props);
   const { status, id: saleId, saleDate, totalPrice } = props;
   const date = moment(new Date(saleDate)).format('DD/MM/YY');
 
@@ -58,8 +57,8 @@ export default function Order(props) {
 }
 
 Order.propTypes = {
-  status: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  saleDate: PropTypes.string.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-};
+  status: PropTypes.string,
+  id: PropTypes.string,
+  saleDate: PropTypes.string,
+  totalPrice: PropTypes.number,
+}.isRequired;

@@ -28,7 +28,6 @@ export default function OrderDetails() {
     const loadOrder = async () => {
       const res = await api.get(`customer/orders/${params.id}`);
       const sale = res.data;
-      console.log('📺🐛 sale', sale);
       setOrder(sale);
     };
     loadOrder();
