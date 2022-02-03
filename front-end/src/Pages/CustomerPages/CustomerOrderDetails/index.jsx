@@ -12,7 +12,7 @@ export default function OrderDetails() {
   const [order, setOrder] = useState(
     {
       sale: {
-        seller: { name: 'j' },
+        seller: { name: '' },
         id: '',
         status: '',
         saleDate: '',
@@ -38,6 +38,9 @@ export default function OrderDetails() {
   const { status, id: orderId, seller: { name }, saleDate, products } = order.sale;
   const statusBar = { status, orderId, name, saleDate };
 
+  const testTotal = 'customer_order_details__element-order-total-price-';
+  const testBtn = 'customer_order_details__button-delivery-check';
+
   // Render functions
   const renderProducts = () => products.map((product, index) => {
     const { SaleProduct, name: productName, price } = product;
@@ -58,7 +61,11 @@ export default function OrderDetails() {
     }, 0);
     return (
       <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
-        <Chip color="secondary" label={ `Total: R$ ${total.toFixed(2)}` } />
+        <Chip
+          data-testid={ testTotal }
+          color="secondary"
+          label={ `Total: R$ ${total.toFixed(2)}` }
+        />
       </Stack>);
   };
 
@@ -74,7 +81,7 @@ export default function OrderDetails() {
             { renderChip() }
           </Box>
         </Paper>
-        <Button variant="contained">marcar como entregue</Button>
+        <Button data-testid={ testBtn } variant="contained">marcar como entregue</Button>
       </Container>
     </>
   );

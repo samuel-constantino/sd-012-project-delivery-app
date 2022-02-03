@@ -25,20 +25,25 @@ export default function StatusBar(props) {
     },
   };
 
+  const testOrderId = 'customer_order_details__element-order-details-label-order-id';
+  const testSeller = 'customer_order_details__element-order-details-label-seller-name';
+  const testDate = 'customer_order_details__element-order-details-label-order-date';
+  const testStat = 'customer_order_details__element-order-details-label-delivery-status';
+
   return (
     <Paper elevation={ 3 } sx={ { padding: '30px 0' } }>
       <Grid { ...gridContainer }>
         <Grid { ...common } xs={ 3 }>
-          <Typography>{`Pedido: ${orderId}`}</Typography>
+          <Typography data-testid={ testOrderId }>{`Pedido: ${orderId}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 3 }>
-          <Typography>{`Vendedor(a): ${name}`}</Typography>
+          <Typography data-testid={ testSeller }>{`Vendedor(a): ${name}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 3 }>
-          <Typography>{`Data: ${date}`}</Typography>
+          <Typography data-testid={ testDate }>{`Data: ${date}`}</Typography>
         </Grid>
         <Grid { ...common } xs={ 3 }>
-          <Typography>{`Status: ${status}`}</Typography>
+          <Typography data-testid={ testStat }>{`Status: ${status}`}</Typography>
         </Grid>
       </Grid>
     </Paper>

@@ -30,23 +30,33 @@ export default function Product(props) {
   const item4 = { ...common, sx: { ...common.sx, backgroundColor: '#9ff' } };
   const item5 = { ...common, sx: { ...common.sx, backgroundColor: '#99f' } };
 
+  const testItem = `customer_order_details__element-order-table-item-number${item - 1}-`;
+  const testDescription = `customer_order_details__element-order-table-name-${item - 1}`;
+  const testQuantity = `customer_order_details__element-order-table-quantity-${item - 1}`;
+  const testSub = `customer_order_details__element-order-table-sub-total-${item - 1}`;
+  const testPrice = `customer_order_details__element-order-table-unit-price-${item - 1}`;
+
   return (
     <Paper elevation={ 3 } sx={ { margin: '10px 0' } }>
       <Grid { ...gridContainer }>
         <Grid { ...item1 } xs={ 1 }>
-          <Typography>{item}</Typography>
+          <Typography data-testid={ testItem }>{item}</Typography>
         </Grid>
         <Grid { ...item2 } xs={ 5 }>
-          <Typography>{productName}</Typography>
+          <Typography data-testid={ testDescription }>{productName}</Typography>
         </Grid>
         <Grid { ...item3 } xs={ 2 }>
-          <Typography>{quantity}</Typography>
+          <Typography data-testid={ testQuantity }>{quantity}</Typography>
         </Grid>
         <Grid { ...item4 } xs={ 2 }>
-          <Typography>{`R$ ${Number(price).toFixed(2)}`}</Typography>
+          <Typography data-testid={ testPrice }>
+            {`R$ ${Number(price).toFixed(2)}`}
+          </Typography>
         </Grid>
         <Grid { ...item5 } xs={ 2 }>
-          <Typography>{`R$ ${(Number(price) * quantity).toFixed(2)}`}</Typography>
+          <Typography data-testid={ testSub }>
+            {`R$ ${(Number(price) * quantity).toFixed(2)}`}
+          </Typography>
         </Grid>
       </Grid>
     </Paper>
