@@ -10,8 +10,9 @@ export default function Orders() {
   // Loads sellers list
   useEffect(() => {
     const loadOrders = async () => {
-      const res = await api.get('ROTA');
-      const list = res.data;
+      const res = await api.get('customer/orders');
+      console.log('📺🐛 ', res.data.sales);
+      const list = res.data.sales;
       setOrders(list);
     };
     loadOrders();

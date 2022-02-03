@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -9,7 +10,9 @@ import Typography from '@mui/material/Typography';
 
 export default function Order(props) {
   const navigate = useNavigate();
-  const { status = 'Pendente', orderId = '13', date = '1/1/22', cost = 0 } = props;
+  console.log('📺🐛 ', props);
+  const { status, id: saleId, saleDate, totalPrice } = props;
+  const date = moment(new Date(saleDate)).format('DD/MM/YY');
 
   const statusPkg = {
     variant: 'h5',
@@ -23,7 +26,7 @@ export default function Order(props) {
 
   const detailsBtnPkg = {
     size: 'small',
-    onClick: () => navigate(`/order-details/${orderId}`),
+    onClick: () => navigate(`/customer/orders/${saleId}`),
   };
 
   return (
@@ -36,15 +39,15 @@ export default function Order(props) {
           sx={ { fontSize: 14 } }
           color="text.secondary"
           gutterBottom
-          data-testid={ `customer_orders__element-order-id-${orderId}` }
+          data-testid={ `customer_orders__element-order-id-${saleId}` }
         >
-          { `Pedido: ${orderId}` }
+          { `Pedido: ${saleId}` }
         </Typography>
         <Typography sx={ { mb: 1.5 } } color="text.secondary">
           { date }
         </Typography>
         <Typography variant="body2">
-          { `R$ ${cost.toFixed(2)}` }
+          { `R$ ${totalPrice}` }
         </Typography>
       </CardContent>
       <CardActions>
@@ -56,7 +59,7 @@ export default function Order(props) {
 
 Order.propTypes = {
   status: PropTypes.string.isRequired,
-  orderId: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  cost: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  saleDate: PropTypes.string.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
