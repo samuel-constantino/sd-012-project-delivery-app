@@ -18,7 +18,9 @@ export default function Login() {
       const res = await api.post('login', login);
       const user = res.data;
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('/customer/products');
+      if (user.role === 'customer') navigate('/customer/products');
+      else if (user.role === 'seller') navigate('/seller/orders');
+      else navigate('/admin/manage');
     } catch (error) {
       setErrMsg('Erro no login');
       console.log('📺🐛 ', error);
