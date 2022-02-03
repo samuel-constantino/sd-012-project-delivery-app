@@ -18,7 +18,7 @@ export default function Products() {
 
   const { cart, setCheckoutCart } = useGlobalState();
 
-  const PRODUCTS_PER_PAGE = 10;
+  const PRODUCTS_PER_PAGE = 11;
 
   useEffect(() => {
     (async () => {

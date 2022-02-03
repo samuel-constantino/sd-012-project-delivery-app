@@ -99,13 +99,14 @@ export default function NavBar() {
             { getButtons() }
           </Box>
           <Box>
-            <Button
+            <button
               { ...buttonPkg }
+              type="button"
               name={ name }
               data-testid="customer_products__element-navbar-user-full-name"
             >
               { name }
-            </Button>
+            </button>
             <Button
               { ...buttonPkg }
               name={ exit }

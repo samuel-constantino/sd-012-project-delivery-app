@@ -124,7 +124,8 @@ export default function ProductCard({ product }) {
           gutterBottom
           data-testid={ `customer_products__element-card-price-${id}` }
         >
-          { `R$ ${price}` }
+          { `R$ ${Number(price).toFixed(2).replace('.', ',')}` }
+          {/* { `R$ ${typeof price}` } */}
         </Typography>
       </CardContent>
 
@@ -145,18 +146,17 @@ export default function ProductCard({ product }) {
       <CardActions>
         <Button
           { ...buttonNegative }
-          data-testid={ `customer_products__button-card-add-item-${id}` }
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
         >
           -
         </Button>
         <TextField
           { ...textFieldQuantity }
           hiddenLabel
-          data-testid={ `customer_products__input-card-quantity-${id}` }
         />
         <Button
           { ...buttonPositive }
-          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          data-testid={ `customer_products__button-card-add-item-${id}` }
         >
           +
         </Button>
