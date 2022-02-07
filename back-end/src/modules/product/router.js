@@ -12,7 +12,7 @@ const product = express.Router();
 
 product.use(rescue(auth));
 
-product.post('/', rescue(getProducts));
+product.get('/', rescue(getProducts));
 product.post('/create', rescue(createProduct));
 product.post('/update/:id', rescue(updateProduct));
 product.get('/remove/:id', rescue(removeProduct));

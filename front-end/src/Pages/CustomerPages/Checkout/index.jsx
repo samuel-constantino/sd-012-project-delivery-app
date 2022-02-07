@@ -1,46 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Container, Paper, Stack, Chip, Button, Typography } from '@mui/material';
 import { useGlobalState } from '../../../Provider';
 import Product from './Product';
 import ProductsTitle from './ProductsTitle';
 import DeliveryDetails from './DeliveryDetails';
-import EndDialog from './EndDialog';
+// import EndDialog from './EndDialog';
 import api from '../../../Services/api';
 import NavBar from '../../../Components/Navbar';
 
+const num = 200;
+
 export default function Checkout() {
   // State
-  const { checkoutCart, setCheckoutCart, setCart, setTotalPrice } = useGlobalState();
+  const { cart, setCart, setTotalPrice } = useGlobalState();
   const { deliveryInfo } = useGlobalState();
-  const [showDialog, setShowDialog] = useState(false);
-  const [saleId, setSaleId] = useState();
+  // const [showDialog, setShowDialog] = useState(false);
+  // const [saleId, setSaleId] = useState();
+  const navigate = useNavigate();
 
   // Handlers
   const handleSubmit = async () => {
-    const products = checkoutCart
-      .map(({ productId, quantity }) => ({ productId, quantity }));
+    const products = cart
+      .map(({ id: productId, quantity }) => ({ productId, quantity }));
     const customerOrder = { products, deliveryInfo };
     customerOrder.deliveryInfo.status = 'Pendente';
+    customerOrder.deliveryInfo.sellerName = 'Fulana Pereira';
     const { data } = await api.post('customer/orders', customerOrder);
-    setSaleId(data.sale.id);
-    setShowDialog(true);
+    // setSaleId(data.sale.id);
+    setTimeout((() => {
+      navigate(`/customer/orders/${data.sale.id}`);
+    }), num);
+    // navigate(`/customer/orders/${data.sale.id}`);
   };
   const handleDelete = (product, productIndex) => {
-    const { name, price, quantity } = product;
+    const { price, quantity } = product;
     const subTotal = +price * quantity;
-    const updatedCheckoutCart = checkoutCart.filter(
+    const updatedCart = cart.filter(
       (_product, index) => productIndex !== index,
     );
-    setCheckoutCart(updatedCheckoutCart);
-    setCart((prevCart) => {
-      delete prevCart[name];
-      return prevCart;
-    });
+    setCart(updatedCart);
     setTotalPrice((prevPrice) => prevPrice - subTotal);
   };
 
   // Render functions
-  const renderProducts = () => checkoutCart.map((product, index) => {
+  const renderProducts = () => cart.map((product, index) => {
     const props = {
       ...product,
       item: index + 1,
@@ -49,7 +53,7 @@ export default function Checkout() {
     return <Product key={ index } { ...props } />;
   });
   const renderChip = () => {
-    const total = checkoutCart.reduce(
+    const total = cart.reduce(
       (prev, curr) => prev + (curr.price * curr.quantity), 0,
     );
     return (
@@ -72,11 +76,11 @@ export default function Checkout() {
     sx: { margin: '0 0 30px 0' },
     variant: 'h5',
   };
-  const endDialogPkg = {
-    showDialog,
-    setShowDialog,
-    saleId,
-  };
+  // const endDialogPkg = {
+  //   showDialog,
+  //   setShowDialog,
+  //   saleId,
+  // };
 
   return (
     <>
@@ -100,10 +104,11 @@ export default function Checkout() {
         <Button
           { ...SubmitBtnPkg }
           data-testid="customer_checkout__button-submit-order"
+          // type="button"
         >
           Finalizar pedido
         </Button>
-        <EndDialog { ...endDialogPkg } />
+        {/* <EndDialog { ...endDialogPkg } /> */}
       </Container>
     </>
   );

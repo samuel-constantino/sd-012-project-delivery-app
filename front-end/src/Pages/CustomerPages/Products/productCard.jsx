@@ -11,70 +11,62 @@ import {
 import PropTypes from 'prop-types';
 import { useGlobalState } from '../../../Provider';
 
-export default function ProductCard({ product }) {
-  const { setCart, setTotalPrice } = useGlobalState();
-  const { id, name, price, urlImage } = product;
-  const [quantity, setQuantity] = useState(0);
+export default function ProductCard({ product: { id, name, price, urlImage } }) {
+  const { cart, setCart } = useGlobalState();
   const [disabled, setDisabled] = useState(true);
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
-    if (quantity === 0) setDisabled(true);
+    if (quantity === 0 || quantity === '') setDisabled(true);
     else setDisabled(false);
   }, [quantity]);
 
-  const addToCart = ({ name: productName, price: productPrice }) => {
-    setCart((prevCart) => {
-      let productQuantity = 1;
-      // Se o produto existir no carrinho, atualize sua quantidade
-      if (prevCart[productName]) {
-        productQuantity += prevCart[productName].quantity;
-      }
-
-      // Atualiza preço total
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + +productPrice);
-
-      return {
-        ...prevCart,
-        [productName]: { price: productPrice, quantity: productQuantity, productId: id },
-      };
-    });
-  };
-
-  const removeToCart = ({ name: productName, price: productPrice }) => {
-    setCart((prevCart) => {
-      const productQuantity = prevCart[productName].quantity - 1;
-
-      // Atualiza preço total
-      setTotalPrice((prevTotalPrice) => prevTotalPrice - +productPrice);
-
-      if (productQuantity === 0) {
-        delete prevCart[productName];
-        return prevCart;
-      }
-
-      return {
-        ...prevCart,
-        [productName]: { price: productPrice, quantity: productQuantity, productId: id },
-      };
-    });
-  };
-
-  const handleClick = (target) => {
-    if (target.name === 'positive') {
-      setQuantity(quantity + 1);
-      addToCart({ name, price });
+  const updateCart = (updateQuantity) => {
+    const newProduct = {
+      id,
+      name,
+      price,
+      urlImage,
+    };
+    newProduct.quantity = updateQuantity;
+    const productExists = cart.find(({ id: productId }) => productId === id);
+    if (!productExists) {
+      setCart([...cart, newProduct]);
+    } else if (updateQuantity === 0 || updateQuantity === '') {
+      const newArr = cart.filter((e) => e.id !== id);
+      setCart(newArr);
     } else {
-      setQuantity(quantity - 1);
-      removeToCart({ name, price });
+      const newArr = cart.map((e) => (e.id === id ? newProduct : e));
+      setCart(newArr);
     }
+  };
+
+  const handleAdd = () => {
+    setQuantity((prevQuantity) => +prevQuantity + 1);
+    updateCart(quantity + 1);
+  };
+
+  const handleRmv = () => {
+    setQuantity((prevQuantity) => +prevQuantity - 1);
+    updateCart(quantity - 1);
   };
 
   const handleChange = (target) => {
     const value = +target.value;
-    if (value <= 0) setQuantity(0);
+    if (value <= 0) setQuantity('');
     else setQuantity(value);
+    updateCart(value);
   };
 
+  const handleFocus = () => {
+    if (!quantity || quantity === 0) setQuantity('');
+    else setQuantity((prevQuantity) => prevQuantity);
+  };
+
+  const handleFocusOut = () => {
+    if (quantity === '') setQuantity(0);
+    else setQuantity((prevQuantity) => prevQuantity);
+  };
   // Packaging
   const typographyH6 = {
     variant: 'h6',
@@ -95,15 +87,13 @@ export default function ProductCard({ product }) {
 
   const buttonNegative = {
     size: 'small',
-    name: 'negative',
     disabled,
-    onClick: ({ target }) => handleClick(target),
+    onClick: () => handleRmv(),
   };
 
   const buttonPositive = {
     size: 'small',
-    name: 'positive',
-    onClick: ({ target }) => handleClick(target),
+    onClick: () => handleAdd(),
   };
 
   const textFieldQuantity = {
@@ -113,6 +103,8 @@ export default function ProductCard({ product }) {
     type: 'number',
     inputProps: { 'data-testid': `customer_products__input-card-quantity-${id}` },
     onChange: ({ target }) => handleChange(target),
+    onFocus: () => handleFocus(),
+    onBlur: () => handleFocusOut(),
   };
 
   return (
@@ -125,7 +117,6 @@ export default function ProductCard({ product }) {
           data-testid={ `customer_products__element-card-price-${id}` }
         >
           { `R$ ${Number(price).toFixed(2).replace('.', ',')}` }
-          {/* { `R$ ${typeof price}` } */}
         </Typography>
       </CardContent>
 

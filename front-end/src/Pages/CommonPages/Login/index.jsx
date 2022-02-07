@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Grid, Paper, TextField, Button, Typography } from '@mui/material';
 import loginSchema from '../../../Validations/loginSchema';
 import api from '../../../Services/api';
+import { useGlobalState } from '../../../Provider';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useGlobalState();
 
   // State
   const [login, setLogin] = useState({});
@@ -18,6 +20,7 @@ export default function Login() {
       const res = await api.post('login', login);
       const user = res.data;
       localStorage.setItem('user', JSON.stringify(user));
+      setIsLoggedIn(true);
       if (user.role === 'customer') navigate('/customer/products');
       else if (user.role === 'seller') navigate('/seller/orders');
       else navigate('/admin/manage');

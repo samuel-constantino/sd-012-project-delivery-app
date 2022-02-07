@@ -6,23 +6,26 @@ const AppContext = createContext();
 
 // Criação do Provider
 const Provider = ({ children }) => {
-  const [checkoutCart, setCheckoutCart] = useState([]);
+  const [cart, setCart] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
   const [deliveryInfo, setDeliveryInfo] = useState({});
-  const [cart, setCart] = useState({});
+  const [checkoutCart, setCheckoutCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const statesPkg = {
-    checkoutCart,
-    setCheckoutCart,
+    cart,
+    setCart,
     allOrders,
     setAllOrders,
     deliveryInfo,
     setDeliveryInfo,
-    cart,
-    setCart,
+    checkoutCart,
+    setCheckoutCart,
     totalPrice,
     setTotalPrice,
+    isLoggedIn,
+    setIsLoggedIn,
   };
 
   return (

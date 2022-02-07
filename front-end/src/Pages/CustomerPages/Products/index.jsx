@@ -1,52 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Pagination } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './productCard';
 import api from '../../../Services/api';
 import { useGlobalState } from '../../../Provider';
-import { formatCart } from '../../../util/formatCart';
 import Navbar from '../../../Components/Navbar';
 
 export default function Products() {
+  const [products, setProducts] = useState([]);
+  const { cart, setTotalPrice } = useGlobalState();
+
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
-  const { totalPrice } = useGlobalState();
+  // Load products
+  const getProducts = useCallback(async () => {
+    const { data } = await api.get('products');
+    setProducts(data.products);
+  }, []);
 
-  const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
+  useEffect(() => getProducts(), [getProducts]);
 
-  const { cart, setCheckoutCart } = useGlobalState();
-
-  const PRODUCTS_PER_PAGE = 11;
-
-  useEffect(() => {
-    (async () => {
-      const offset = (page - 1) * PRODUCTS_PER_PAGE;
-      const limit = PRODUCTS_PER_PAGE;
-      const { data } = await api.post('products', { offset, limit });
-      const productsArray = data.products.rows;
-      const productsQuantity = data.products.count;
-      const pagesQuantity = Math.ceil(productsQuantity / PRODUCTS_PER_PAGE);
-      setProducts(productsArray);
-      setPages(pagesQuantity);
-    })();
-  }, [page]);
+  const calculateTotal = () => cart.reduce((acc, { quantity, price }) => {
+    const total = acc + (Number(quantity) * Number(price));
+    return total;
+  }, 0);
 
   // Packaging
   const buttonCart = {
     variant: 'contained',
     onClick: () => {
-      setCheckoutCart(formatCart(cart));
+      setTotalPrice(calculateTotal());
       navigate('/customer/checkout');
     },
-  };
-
-  const pagination = {
-    count: pages,
-    color: 'primary',
-    page,
-    onChange: (_event, value) => setPage(value),
+    disabled: calculateTotal() === 0,
   };
 
   return (
@@ -54,21 +40,22 @@ export default function Products() {
       <Navbar />
       <Button
         { ...buttonCart }
-        data-testid="customer_products__checkout-bottom-value"
+        data-testid="customer_products__button-cart"
       >
         Ver Carrinho R$
-        { totalPrice.toFixed(2).replace('.', ',') }
+        <span
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          {calculateTotal().toFixed(2).replace('.', ',')}
+        </span>
       </Button>
-      <Pagination { ...pagination } />
       <Box sx={ { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' } }>
         {
-          products
-            ? products
-              .map((product) => (<ProductCard
-                data-testid={ `customer_products__element-card-price-${product.id}` }
-                key={ product.id }
-                product={ product }
-              />))
+          products ? products
+            .map((product) => (<ProductCard
+              key={ product.id }
+              product={ product }
+            />))
             : <h1>Loading</h1>
         }
       </Box>

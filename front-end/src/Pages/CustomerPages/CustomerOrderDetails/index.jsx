@@ -1,43 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Container, Paper, Stack, Chip, Button } from '@mui/material';
+import { Box, Container, Paper, Stack, Button } from '@mui/material';
+import io from 'socket.io-client';
 import Product from './Product';
 import ProductsTitle from './ProductsTitle';
 import StatusBar from './StatusBar';
 import NavBar from '../../../Components/Navbar';
 import api from '../../../Services/api';
+import { useGlobalState } from '../../../Provider';
+
+const socket = io('http://localhost:3001');
 
 export default function OrderDetails() {
   // State
   const [order, setOrder] = useState(
     {
-      sale: {
-        seller: { name: '' },
-        id: '',
-        status: '',
-        saleDate: '',
-        products: [],
-      },
+      seller: { name: '' },
+      id: '',
+      status: '',
+      saleDate: '',
+      products: [],
+
     },
   );
-
-  const params = useParams();
+  const [status, setStatus] = useState('Pendente');
+  const { totalPrice } = useGlobalState();
+  const { id: idParam } = useParams();
 
   // Loads sellers list
   useEffect(() => {
-    const loadOrder = async () => {
-      const res = await api.get(`customer/orders/${params.id}`);
-      const sale = res.data;
-      setOrder(sale);
-    };
-    loadOrder();
-  }, [params.id]);
+    (async () => {
+      const { data } = await api.get(`customer/orders/${idParam}`);
+      setOrder(data.sale);
+      setStatus(order.status);
+    })();
+  }, [idParam, order.status]);
 
   // Destructuring
-  const { status, id: orderId, seller: { name }, saleDate, products } = order.sale;
+  const { id: orderId, seller: { name }, saleDate, products } = order;
   const statusBar = { status, orderId, name, saleDate };
 
-  const testTotal = 'customer_order_details__element-order-total-price-';
+  // Socket
+  const statusUpdate = (statusMessage) => {
+    socket.emit('statusUpdate', { statusMessage, saleId: orderId });
+  };
+
+  const onStatusUpdate = ({ statusMessage }) => {
+    setStatus(statusMessage);
+  };
+
+  socket.on('statusUpdate', onStatusUpdate);
+
+  // DataTestIds
+  const testTotal = 'customer_order_details__element-order-total-price';
   const testBtn = 'customer_order_details__button-delivery-check';
 
   // Render functions
@@ -52,35 +67,39 @@ export default function OrderDetails() {
     };
     return <Product key={ index } { ...props } />;
   });
-  const renderChip = () => {
-    const total = products.reduce((prev, curr) => {
-      const price = Number(curr.price);
-      const { quantity } = curr.SaleProduct;
-      return prev + price * quantity;
-    }, 0);
-    return (
-      <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
-        <Chip
-          data-testid={ testTotal }
-          color="secondary"
-          label={ `Total: R$ ${total.toFixed(2)}` }
-        />
-      </Stack>);
-  };
+
+  const renderChip = () => (
+    <Stack direction="row" justifyContent="flex-end" marginTop={ 5 }>
+      <div>
+        Total: R$
+        <span data-testid={ testTotal }>
+          {totalPrice.toFixed(2).toString().replace('.', ',')}
+        </span>
+      </div>
+    </Stack>
+  );
 
   return (
     <>
       <NavBar />
       <Container>
         <StatusBar { ...statusBar } />
-        <Paper elevation={ 6 } sx={ { margin: '10px 0' } }>
+        <Paper elevation={ 6 }>
           <Box px={ 4 } py={ 6 }>
             <ProductsTitle />
-            { renderProducts() }
-            { renderChip() }
+            {order.products ? renderProducts() : <h1>loading</h1>}
+            {renderChip()}
           </Box>
         </Paper>
-        <Button data-testid={ testBtn } variant="contained">marcar como entregue</Button>
+        <Button
+          data-testid={ testBtn }
+          variant="contained"
+          disabled={ statusBar.status !== 'Em Trânsito' }
+          onClick={ () => statusUpdate('Entregue') }
+          style={ { position: 'fixed' } }
+        >
+          marcar como entregue
+        </Button>
       </Container>
     </>
   );

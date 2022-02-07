@@ -39,7 +39,7 @@ export default function Product(props) {
   };
 
   return (
-    <Paper elevation={ 3 } sx={ { margin: '10px 0' } }>
+    <Paper elevation={ 3 }>
       <Grid { ...gridContainer }>
         <Grid { ...item1 } xs={ 1 }>
           <Typography

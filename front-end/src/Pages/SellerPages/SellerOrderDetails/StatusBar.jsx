@@ -6,7 +6,7 @@ import { Grid, Typography, Paper } from '@mui/material';
 export default function StatusBar(props) {
   const { status, saleId, saleDate } = props;
 
-  const date = moment(new Date(saleDate)).format('DD/MM/YY');
+  const date = moment(new Date(saleDate)).format('DD/MM/YYYY');
 
   const gridContainer = {
     container: true,
@@ -25,13 +25,13 @@ export default function StatusBar(props) {
     },
   };
   const dataTestIds = {
-    orderId: `seller_order_details__element-order-details-label-order-${saleId}`,
+    orderId: 'seller_order_details__element-order-details-label-order-id',
     deliveryStatus: 'seller_order_details__element-order-details-label-delivery-status',
     orderDate: 'seller_order_details__element-order-details-label-order-date',
   };
 
   return (
-    <Paper elevation={ 3 } sx={ { padding: '30px 0' } }>
+    <Paper elevation={ 3 }>
       <Grid { ...gridContainer }>
         <Grid { ...common } xs={ 3 }>
           <Typography
@@ -51,7 +51,7 @@ export default function StatusBar(props) {
           <Typography
             data-testid={ dataTestIds.deliveryStatus }
           >
-            {`Status: ${status}`}
+            {`${status}`}
           </Typography>
         </Grid>
       </Grid>

@@ -4,9 +4,9 @@ import {
   Box,
   Toolbar,
   Button,
-  // Grid,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/styles';
 
 export default function NavBar() {
   const { name, role } = JSON.parse(localStorage.getItem('user'));
@@ -16,16 +16,14 @@ export default function NavBar() {
   const orders = 'MEUS PEDIDOS';
   const managerUsers = 'GERENCIAR USUÁRIOS';
   const exit = 'SAIR';
+  const sales = 'PEDIDOS';
 
   const handleClick = (target) => {
     if (target.name === products) navigate('/customer/products');
-
     if (target.name === orders) navigate('/customer/orders');
-
     if (target.name === name) console.log('nome do usuário: ', name);
-
     if (target.name === managerUsers) console.log('requisito bônus');
-
+    if (target.name === sales) navigate('/seller/orders');
     if (target.name === exit) {
       localStorage.removeItem('user');
       navigate('/login');
@@ -40,6 +38,7 @@ export default function NavBar() {
       fontSize: '18px',
     },
   };
+
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -61,10 +60,10 @@ export default function NavBar() {
       return (
         <Button
           { ...buttonPkg }
-          name={ products }
-          data-testid="customer_products__element-navbar-link-products"
+          name={ sales }
+          data-testid="customer_products__element-navbar-link-orders"
         >
-          { products }
+          { sales }
         </Button>
       );
     }
@@ -91,6 +90,11 @@ export default function NavBar() {
     }
   };
 
+  // Styles
+  const NoCapsPls = styled(Button)({
+    textTransform: 'none',
+  });
+
   return (
     <Box>
       <AppBar position="static">
@@ -99,14 +103,14 @@ export default function NavBar() {
             { getButtons() }
           </Box>
           <Box>
-            <button
+            <NoCapsPls
               { ...buttonPkg }
               type="button"
               name={ name }
               data-testid="customer_products__element-navbar-user-full-name"
             >
               { name }
-            </button>
+            </NoCapsPls>
             <Button
               { ...buttonPkg }
               name={ exit }

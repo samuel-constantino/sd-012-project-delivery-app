@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import {
   Grid,
   TextField,
-  Select,
+  // Select,
   FormControl,
   InputLabel,
-  MenuItem,
+  // MenuItem,
 } from '@mui/material';
 import { useGlobalState } from '../../../Provider';
 import api from '../../../Services/api';
@@ -15,9 +15,14 @@ export default function DeliveryDetails() {
   // State
   const { deliveryInfo, setDeliveryInfo } = useGlobalState();
   const [sellersList, setSellersList] = useState([]);
+  // const [value, setValue] = useState('');
 
   // Destructuring
-  const { sellerName = '', deliveryAddress = '', deliveryNumber = '' } = deliveryInfo;
+  const {
+    sellerName = '',
+    deliveryAddress = '',
+    deliveryNumber = '',
+  } = deliveryInfo;
 
   // Loads sellers list
   useEffect(() => {
@@ -31,7 +36,10 @@ export default function DeliveryDetails() {
 
   // Handle Changes
   const handleSellerChange = (e) => {
-    setDeliveryInfo({ ...deliveryInfo, sellerName: e.target.value });
+    setDeliveryInfo({
+      ...deliveryInfo,
+      sellerName: e.target.value,
+    });
   };
   const handleAddressChange = (e) => {
     setDeliveryInfo({ ...deliveryInfo, deliveryAddress: e.target.value });
@@ -43,19 +51,25 @@ export default function DeliveryDetails() {
   // Rendering functions
   const renderSelect = () => {
     const options = sellersList.map((e, index) => (
-      <MenuItem value={ e.name } key={ index }>{ e.name }</MenuItem>));
+      <option
+        value={ e.id }
+        key={ index }
+      >
+        { e.name }
+      </option>));
 
     return (
       <FormControl fullWidth>
         <InputLabel>Vendedor Responsável</InputLabel>
-        <Select
+        <select
           value={ sellerName }
           label="Vendedor Responsável"
           data-testid="customer_checkout__select-seller"
           onChange={ handleSellerChange }
         >
+          <option value="Fulana Pereira">Escolha a pessoa vendedora</option>
           { options }
-        </Select>
+        </select>
       </FormControl>
     );
   };
@@ -63,7 +77,6 @@ export default function DeliveryDetails() {
   // Packaging
   const gridContainer = {
     container: true,
-    // xs: 12,
     sx: {
       justifyContent: 'center',
       alignItems: 'stretch',

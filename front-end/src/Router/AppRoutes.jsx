@@ -20,13 +20,19 @@ import SellerOrders from '../Pages/SellerPages/SellerOrders';
 import Dashboard from '../Pages/AdminPages/Dashboard';
 
 export default function AppRoutes() {
+  const getUser = () => JSON.parse(localStorage.getItem('user'));
+
   return (
 
     <BrowserRouter>
       <Routes>
 
         {/* Common */}
-        <Route exact path="/login" element={ <Login /> } />
+        <Route
+          exact
+          path="/login"
+          element={ getUser() ? <Navigate replace to="/customer/products" /> : <Login /> }
+        />
         <Route exact path="/register" element={ <Signup /> } />
 
         {/* Customer */}

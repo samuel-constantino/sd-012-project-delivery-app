@@ -7,7 +7,6 @@ export default function Product(props) {
 
   const gridContainer = {
     container: true,
-    // xs: 12,
     sx: {
       justifyContent: 'center',
       alignItems: 'stretch',

@@ -23,8 +23,8 @@ beforeEach(async () => {
 
   expect(
     (await action.common.navigate.login.default(page, "customer")) &&
-      (await action.customer.validateProductsTotalPrice(page, itemList)) &&
-      (await action.common.navigate.customer.checkout.default(page))
+    (await action.customer.validateProductsTotalPrice(page, itemList)) &&
+    (await action.common.navigate.customer.checkout.default(page))
   ).toBeTruthy();
 
   const { saleId, saleDate } = await action.customer.checkoutNewSale(
@@ -43,8 +43,8 @@ beforeEach(async () => {
 
   expect(
     (await action.common.navigate.logout.default(page)) &&
-      (await action.common.navigate.login.default(page, "seller")) &&
-      (await action.common.navigate.seller.orderDetails.default(page, saleId))
+    (await action.common.navigate.login.default(page, "seller")) &&
+    (await action.common.navigate.seller.orderDetails.default(page, saleId))
   ).toBeTruthy();
 });
 
@@ -70,23 +70,23 @@ describe(requirement(30), () => {
     for (let i = zero; i < itemList.cart.length; i += one) {
       await expect(page).toFindElement(
         sellerOrderDetailsPage.element.orderTable.itemNumber +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toFindElement(
         sellerOrderDetailsPage.element.orderTable.name +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toFindElement(
         sellerOrderDetailsPage.element.orderTable.quantity +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toFindElement(
         sellerOrderDetailsPage.element.orderTable.unitPrice +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toFindElement(
         sellerOrderDetailsPage.element.orderTable.subTotal +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
     }
   });
@@ -123,29 +123,29 @@ describe(requirement(31), () => {
     for (let i = zero; i < itemList.cart.length; i += one) {
       await expect(page).toGetTextFromElement(
         sellerOrderDetailsPage.element.orderTable.itemNumber +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toGetTextFromElement(
         sellerOrderDetailsPage.element.orderTable.name +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toGetTextFromElement(
         sellerOrderDetailsPage.element.orderTable.quantity +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toGetTextFromElement(
         sellerOrderDetailsPage.element.orderTable.unitPrice +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
       await expect(page).toGetTextFromElement(
         sellerOrderDetailsPage.element.orderTable.subTotal +
-          `[data-testid$='-${i}']`
+        `[data-testid$='-${i}']`
       );
     }
   });
 });
 
-describe(requirement(32), () => {
+describe.only(requirement(32), () => {
   test("O avaliador testará se alteração do pedido é persistente após a atualização da página", async () => {
     expect(await updateStatus({ SOD: page, currentOrder })).toBeTruthy();
   });

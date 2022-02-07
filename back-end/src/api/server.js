@@ -1,7 +1,7 @@
 const http = require('http').createServer(require('./app'));
 const io = require('socket.io')(http, {
   cors: {
-    origin: 'http:localhost:3000',
+    origin: 'http://localhost:3000',
   },
 });
 

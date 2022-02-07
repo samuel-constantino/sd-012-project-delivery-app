@@ -1,7 +1,7 @@
 const { Product } = require('../../../database/models');
 
-const getProductsHandler = async ({ offset, limit }) => {
-    const products = await Product.findAndCountAll({ offset, limit });
+const getProductsHandler = async () => {
+    const products = await Product.findAll();
     return products;
 };
 

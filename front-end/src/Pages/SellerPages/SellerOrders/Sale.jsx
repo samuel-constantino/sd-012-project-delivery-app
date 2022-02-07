@@ -19,7 +19,7 @@ export default function Sale(props) {
     deliveryNumber,
   } = props;
 
-  const serializedDate = moment(saleDate).format('DD/MM/YY');
+  const serializedDate = moment(saleDate).format('DD/MM/YYYY');
 
   const statusPkg = {
     variant: 'h5',
@@ -37,7 +37,10 @@ export default function Sale(props) {
   };
 
   return (
-    <Card sx={ { width: '200px', margin: '20px' } }>
+    <Card
+      sx={ { width: '200px', margin: '20px' } }
+      onClick={ () => navigate(`/seller/orders/${saleId}`) }
+    >
       <CardContent>
         <Typography
           { ...statusPkg }
@@ -49,6 +52,7 @@ export default function Sale(props) {
           sx={ { fontSize: 14 } }
           color="text.secondary"
           gutterBottom
+          onClick={ () => navigate(`/seller/orders/${saleId}`) }
           data-testid={ `seller_orders__element-order-id-${saleId}` }
         >
           { `Pedido: ${saleId}` }
